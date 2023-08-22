@@ -1,0 +1,39 @@
+# Use an official Python runtime as a parent image
+FROM python:3-alpine
+# Update pip first
+#RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir --upgrade setuptools
+
+# Create a virtual environment
+RUN python -m venv /venv
+
+# Activate the virtual environment
+ENV PATH="/venv/bin:$PATH"
+
+# Install your project's dependencies
+# `RUN pip install --upgrade pip setuptools && \
+#     pip install -r requirement.txt
+
+
+# # Set the working directory to /app
+# WORKDIR /app
+
+# # Copy the current directory contents into the container at /app
+# COPY . /app
+
+RUN apk add --no-cache \
+    g++ \
+    libressl-dev \
+    musl-dev
+# Install any necessary dependencies
+ADD requirement.txt .
+RUN pip install --upgrade pip setuptools && \
+    pip install -r requirement.txt
+
+ADD . /app
+WORKDIR /app
+ENV PYTHONPATH=/app/
+
+# Run the Streamlit app
+CMD ["streamlit", "run", "main.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
