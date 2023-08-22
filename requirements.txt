@@ -1,0 +1,8 @@
+numpy
+streamlit
+pandas
+matplotlib
+plotly
+pywaffle
+wordcloud
+mplcursors
