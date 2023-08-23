@@ -6,3 +6,7 @@ plotly
 pywaffle
 wordcloud
 mplcursors
+sklearn
+tensorflow_hub
+tensorflow
+gensim
