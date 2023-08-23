@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/myapp  # Specify the destination directory on the EC2 instance
+hooks:
+  ApplicationStart:
+    - location: Setup_run.sh
+      timeout: 300
+      runas: root  # Replace with the appropriate user
