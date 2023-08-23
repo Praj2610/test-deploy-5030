@@ -9,14 +9,13 @@ phases:
       - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e5v7i8q7
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
-      
+
   build:
     commands:
       - echo Build started on now
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
-
   post_build:
     commands:
       - echo Build completed on now!!
@@ -26,11 +25,3 @@ phases:
       - echo Writing image definitions file...
       - printf '[{"name":"order-service","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
-    artifacts:
-      files: '**/*'
-      base-directory: .
-      name: your-artifact-name
-      discard-paths: yes
-     commands:
-      - aws s3 cp ./your-artifact-name s3://codepipeline-us-east-1-8066424989/demo-pipe-us-east-1/SourceArti/
-      
