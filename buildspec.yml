@@ -26,10 +26,11 @@ phases:
       - echo Writing image definitions file...
       - printf '[{"name":"order-service","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
-      - aws s3 cp ./your-artifact-name s3://codepipeline-us-east-1-8066424989/demo-pipe-us-east-1/SourceArti/
-      
     artifacts:
       files: '**/*'
       base-directory: .
       name: your-artifact-name
       discard-paths: yes
+     commands:
+      - aws s3 cp ./your-artifact-name s3://codepipeline-us-east-1-8066424989/demo-pipe-us-east-1/SourceArti/
+      
