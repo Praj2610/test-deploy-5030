@@ -12,6 +12,7 @@ phases:
 
   build:
     commands:
+      - sudo systemctl enable docker
       - echo Build started on now
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
